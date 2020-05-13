@@ -15,7 +15,7 @@ public class Server {
 	static private List<Transaction_info> history=new ArrayList<>();
 	public static void main(String[] args) throws LifecycleException
 	{
-		SparkConf conf=new SparkConf().setMaster("local").setAppName("Project 1 Pejal");
+		SparkConf conf=new SparkConf().setMaster("local").setAppName("Project 1 Pejal").set("spark.testing.memory", "536870912");
 		JavaSparkContext sparkContext=new JavaSparkContext(conf);//error occur here
 		JavaRDD<String> data=sparkContext.textFile("SalesJan2009.csv");
 		addToHistory(data);

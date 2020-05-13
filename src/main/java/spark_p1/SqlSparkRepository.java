@@ -19,7 +19,7 @@ public class SqlSparkRepository {
 	}
 	public void insertAll(List<Transaction_info> data)
 	{
-		String command="insert into transaction(transaction_data,product,price,payment_type,name,city,state,country,account_create,last_login,latitude,longitude) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		String command="insert into transaction(transaction_date,product,price,payment_type,name,city,state,country,account_create,last_login,latitude,longitude) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		try(Connection connection=this.dataSource.getConnection();PreparedStatement statement=connection.prepareStatement(command);)
 		{
 			for(Transaction_info d:data)

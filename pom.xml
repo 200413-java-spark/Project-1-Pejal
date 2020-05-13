@@ -4,70 +4,102 @@
   <artifactId>spark_p1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  
+  <name>server</name>
   <properties>
-  	<maven.compiler.source>1.8</maven.compiler.source>
-  	<maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <exec.mainClass>spark_p1.Server</exec.mainClass>
   </properties>
-  
+
   <dependencies>
-  	<dependency>
-  		<groupId>org.apache.tomcat.embed</groupId>
-  		<artifactId>tomcat-embed-core</artifactId>
-  		<version>9.0.34</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.tomcat.embed</groupId>
-  		<artifactId>tomcat-embed-jasper</artifactId>
-  		<version>9.0.34</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.spark</groupId>
-  		<artifactId>spark-core_2.12</artifactId>
-  		<version>2.4.5</version>
-  	</dependency>
-  
+        <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>9.0.34</version>
+        </dependency>
+        <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+                <version>9.0.34</version>
+        </dependency>
+        <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_2.12</artifactId>
+                <version>2.4.5</version>
+        </dependency>
+
+        <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.2.12</version>
+        </dependency>
+
   </dependencies>
   <build>
-  		<plugins>
-  			<plugin>
-  				<groupId>org.apache.tomcat.maven</groupId>
-  				<artifactId>tomcat7-maven-plugin</artifactId>
-  				<version>2.2</version>
-  			</plugin>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-dependency-plugin</artifactId>
-  				<version>3.1.2</version>
-  				<executions>
-  					<execution>
-  						<id>copy-dependencies</id>
-  						<phase>prepare-package</phase>
-  						<goals>
-  							<goal>copy-dependencies</goal>
-  						</goals>
-  					</execution>
-  				</executions>
-  			</plugin>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-jar-plugin</artifactId>
-  				<version>3.2.0</version>
-  				<configuration>
-  					<archive>
-  						<manifest>
-  							<addClasspath>true</addClasspath>
-  							<classpathPrefix>dependency</classpathPrefix>
-  							<mainClass>spark_p1.Server</mainClass>
-  						</manifest>
-  					</archive>
-  				</configuration>
-  			</plugin>
-  		</plugins>
+                <plugins>
+                        <plugin>
+                                <groupId>org.apache.tomcat.maven</groupId>
+                                <artifactId>tomcat7-maven-plugin</artifactId>
+                                <version>2.2</version>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-dependency-plugin</artifactId>
+                                <version>3.1.2</version>
+                                <executions>
+                                        <execution>
+                                                <id>copy-dependencies</id>
+                                                <phase>prepare-package</phase>
+                                                <goals>
+                                                        <goal>copy-dependencies</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-jar-plugin</artifactId>
+                                <version>3.2.0</version>
+                                <configuration>
+                                        <archive>
+                                                <manifest>
+                                                        <addClasspath>true</addClasspath>
+                                                        <classpathPrefix>dependency</classpathPrefix>
+                                                        <mainClass>spark_p1.Server</mainClass>
+                                                </manifest>
+                                        </archive>
+                                </configuration>
+                        </plugin>
+                        <plugin>
+                                <artifactId>maven-assembly-plugin</artifactId>
+                                <executions>
+                                        <execution>
+                                                <phase>package</phase>
+                                                <goals>
+                                                        <goal>single</goal>
+                                                </goals>
+                                                <configuration>
+                                                        <archive>
+                                                                <manifest>
+                                                                        <mainClass>${exec.mainClass}</mainClass>
+                                                                </manifest>
+                                                        </archive>
+                                                        <descriptorRefs>
+                                                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                                                        </descriptorRefs>
+                                                        <appendAssemblyId>false</appendAssemblyId>
+                                                        <finalName>${name}-${version}</finalName>
+                                                </configuration>
+                                        </execution>
+                                </executions>
+
+                        </plugin>
+                </plugins>
   </build>
-  
-  
-  
-  
-  
+
+
+
+
+
 </project>
+                                  
