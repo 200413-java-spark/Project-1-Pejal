@@ -2,6 +2,7 @@ package spark_p1;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.catalina.LifecycleException;
@@ -12,30 +13,28 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 
 public class Server {
-	static private List<Transaction_info> history=new ArrayList<>();
+	static private List<Transaction_info> history=new ArrayList<>();//server cache
+	
 	public static void main(String[] args) throws LifecycleException
+	{
+		server();
+	}
+	
+	
+	
+	public static void server() throws LifecycleException
 	{
 		SparkConf conf=new SparkConf().setMaster("local").setAppName("Project 1 Pejal").set("spark.testing.memory", "536870912");
 		JavaSparkContext sparkContext=new JavaSparkContext(conf);//error occur here
 		JavaRDD<String> data=sparkContext.textFile("SalesJan2009.csv");
 		addToHistory(data);
-		writeDB(history);
-		int i=0;
-		for(Transaction_info s:history)
-		{
-			if(i>20)
-				break;
-			System.out.println(s);
-			i++;
-		}
-		
-		
+		//writeDB(history);
 		Tomcat tomcat=new Tomcat();
 		tomcat.setBaseDir(new File("target/tomcat/").getAbsolutePath());
 		tomcat.setPort(8080);
 		tomcat.getConnector();
 		tomcat.addWebapp("/spark_p1", new File("src/main/webapp").getAbsolutePath());
-		tomcat.addServlet("/spark_p1", "CsvServlet", new CsvServlet()).addMapping("/csv");;
+		tomcat.addServlet("/spark_p1", "CsvServlet", new CsvServlet(data)).addMapping("/csv");;
 		tomcat.start(); //error occur here
 		
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -50,7 +49,6 @@ public class Server {
 				}
 			}
 		});
-		
 	}
 	public static void writeDB(List<Transaction_info> data)
 	{
@@ -60,6 +58,7 @@ public class Server {
 	}
 	public static void addToHistory(JavaRDD<String> data)
 	{
+		
 		List<String> temp_data=rddToList(data);
 		for(String s:temp_data)
 		{
