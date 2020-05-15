@@ -37,7 +37,7 @@ public class CsvServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.getWriter().println("doGet of CsvServlet!");
+
 		this.filter=req.getParameter("filter");
 		this.name=req.getParameter("name");
 		this.price=req.getParameter("price");
@@ -51,7 +51,7 @@ public class CsvServlet extends HttpServlet {
 			JavaPairRDD<String,Integer> pair=nameCount();
 			for(Tuple2 s:pair.collect())
 			{
-				resp.getWriter().println(s+"\n\n");
+				resp.getWriter().println("<p>"+s+"</p>");
 			}
 		}
 		if(req.getParameter("city")!=null && filter.equals("false"))
@@ -59,7 +59,7 @@ public class CsvServlet extends HttpServlet {
 			JavaPairRDD<String,Integer> pair=cityCount();
 			for(Tuple2 s:pair.collect())
 			{
-				resp.getWriter().println(s+"\n\n");
+				resp.getWriter().println("<p>"+s+"</p>");
 			}
 		}
 		if(req.getParameter("state")!=null && filter.equals("false"))
@@ -67,7 +67,7 @@ public class CsvServlet extends HttpServlet {
 			JavaPairRDD<String,Integer> pair=stateCount();
 			for(Tuple2 s:pair.collect())
 			{
-				resp.getWriter().println(s+"\n\n");
+				resp.getWriter().println("<p>"+s+"</p>");
 			}
 		}
 		if(req.getParameter("country")!=null && filter.equals("false"))
@@ -75,7 +75,7 @@ public class CsvServlet extends HttpServlet {
 			JavaPairRDD<String,Integer> pair=countryCount();
 			for(Tuple2 s:pair.collect())
 			{
-				resp.getWriter().println(s+"\n\n");
+				resp.getWriter().println("<p>"+s+"</p>");
 			}
 		}
 		if(this.filter.equals("true"))
@@ -84,7 +84,7 @@ public class CsvServlet extends HttpServlet {
 			resp.getWriter().println("Filter");
 			for(String s: transform)
 			{
-				resp.getWriter().println(s+"\n\n");
+				resp.getWriter().println("<p>"+s+"</p>");
 			}
 		}
 		
