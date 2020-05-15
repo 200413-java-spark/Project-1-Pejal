@@ -29,7 +29,6 @@ public class CsvServlet extends HttpServlet {
 	private String filter="false";
 	
 	
-	
 	public CsvServlet(JavaRDD<String> data)
 	{
 		this.local_cache=data;
@@ -44,6 +43,7 @@ public class CsvServlet extends HttpServlet {
 		this.city=req.getParameter("city");
 		this.state=req.getParameter("state");
 		this.country=req.getParameter("country");
+		
 
 
 		if(req.getParameter("name")!=null && filter.equals("false"))
@@ -88,9 +88,8 @@ public class CsvServlet extends HttpServlet {
 			}
 		}
 		
-		
-		
 	}
+	
 	public List<String> filter()
 	{	List<String> result=new ArrayList<>();
 		
