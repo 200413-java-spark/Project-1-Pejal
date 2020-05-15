@@ -2,7 +2,7 @@
 
 
 ## Introduction
-The main focus of this project is to get familiar with Apache Spark basic opearations. Resilent distributed dataset (RDD), is a collection of element partitioned on mutiple nodes of the cluster that can be opearate in parallel.The main application will load sales transactions which is stored in postgres database and passes to a servlet to perform RDD transformations or actions base on parameters that user provide. 
+The main focus of this project is to get familiar with Apache Spark basic opearations. Resilent distributed dataset (RDD), is a collection of element partitioned on mutiple nodes of the cluster that can be opearate in parallel.The main application will load mutiple sale transactions which are stored in a postgres database and passed to a servlet to perform RDD transformations or actions based on parameters that the user provided. 
 
 ## How To Build And Run Server.java application
 ### Build Command
